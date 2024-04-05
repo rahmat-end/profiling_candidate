@@ -1,7 +1,7 @@
 import "reflect-metadata"
 import { DataSource } from "typeorm"
 import * as dotenv from "dotenv"
-import { ProfilingCandidate1708332323852 } from "./migrations/1708332323852-Profiling_Candidate"
+import { ProfilingCandidate1711926870626 } from "./migrations/1711926870626-Profiling_Candidate"
 
 dotenv.config()
 
@@ -15,6 +15,6 @@ export const AppDataSource = new DataSource({
     synchronize: true,
     logging: false,
     entities: ['src/entities/*.ts'],
-    migrations: [ProfilingCandidate1708332323852],
+    migrations: [ProfilingCandidate1711926870626],
     subscribers: [],
 })

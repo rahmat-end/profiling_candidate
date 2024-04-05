@@ -8,6 +8,7 @@ const router = express.Router()
 router.get("/users", UserControllers.find)
 router.get("/user/:id", UserControllers.findOne)
 router.post("/addUser", UserControllers.add)
+router.put("/updateUser/:id", UserControllers.update)
 
 router.get("/questions", QuestionControllers.find)
 router.get("/question/:id", QuestionControllers.findOne)

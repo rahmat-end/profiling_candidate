@@ -11,4 +11,7 @@ export default new class UserControllers {
   add(req: Request, res: Response) {
     UserServices.add(req, res)
   }
+  update(req: Request, res: Response) {
+    UserServices.update(req, res)
+  }
 }

@@ -19,6 +19,9 @@ export class Question {
     dimensions2_campaign: object
 
     @Column('jsonb', { nullable: true })
+    residence: object
+
+    @Column('jsonb', { nullable: true })
     ageism: object
 
     @Column('jsonb', { nullable: true })

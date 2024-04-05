@@ -10,14 +10,17 @@ export class Profiling {
     @Column('jsonb', { nullable: true })
     randomize: object
 
-    @ManyToOne(() => User, (user) => user.profilings)
-    user: User
+    @Column({ nullable: true })
+    choosen_candidate: string
 
     @Column({ nullable: true })
     answer_candidate_a: number
 
     @Column({ nullable: true })
     answer_candidate_b: number
+
+    @ManyToOne(() => User, (user) => user.profilings)
+    user: User
 
     @Column({ type: "timestamp", default: () => "CURRENT_TIMESTAMP"})
     created_at: Timestamp

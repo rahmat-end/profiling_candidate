@@ -30,7 +30,7 @@ export function useProfiling() {
         return shuffledObject
     };
   
-    function mergeCandidates(candidateA: CandidateData, candidateB: CandidateData): MergedData {
+    function mergeCandidates(candidateA: CandidateData, candidateB: CandidateData, question: string): MergedData {
         // Generate a random order for object properties and store it in session storage
         const randomOrder: number[] = []
     
@@ -57,28 +57,31 @@ export function useProfiling() {
     
             switch (key) {
             case 'dimensions1_medsos':
-                variable = 'Dimensi 1 Media sosial (Konten)'
+                variable = question === 'Tiktok' ? 'FYP' : question === 'X/Twitter' ? 'Tweet Viral' : 'Reels Viral';
                 break
             case 'dimensions2_medsos':
-                variable = 'Dimensi 2 Media sosial (Interaksi)'
+                variable = question === 'Tiktok' ? 'Live Tiktok' : 'Reply Comment';
                 break
             case 'dimensions1_campaign':
-                variable = 'Dimensi 1 Conventional campaign (Konten)'
+                variable = 'Banner Pinggir Jalan'
                 break
             case 'dimensions2_campaign':
-                variable = 'Dimensi 2 Conventional campaign Blusukan'
+                variable = 'Blusukan'
+                break
+            case 'residence':
+                variable = 'Tempat Tinggal'
                 break
             case 'ageism':
-                variable = 'Ageism'
+                variable = 'Usia'
                 break
             case 'incumbency':
-                variable = 'Incumbency'
+                variable = 'Status Jabatan'
                 break
             case 'education':
-                variable = 'Educational Attainment'
+                variable = 'Pendidikan'
                 break
             case 'party':
-                variable = 'Party'
+                variable = 'Partai'
                 break
             default:
                 variable = `Unknown Dimension (${key})`
@@ -98,6 +101,7 @@ export function useProfiling() {
 
     const [form, setForm] = React.useState<IProfiling>({
         randomize: {},
+        choosen_candidate: '',
         answer_candidate_a: 0,
         answer_candidate_b: 0,
         userId: 0

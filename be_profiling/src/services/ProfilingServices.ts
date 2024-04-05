@@ -32,7 +32,7 @@ export default new class ProfilingServices {
       try {
         const profiling = await this.ProfilingRepository.findOne({
           where: {
-              id: JSON.parse(req.params.id)
+              user: JSON.parse(req.params.id)
           },
           relations: {
             user: true
@@ -99,6 +99,7 @@ export default new class ProfilingServices {
     
           const obj = this.ProfilingRepository.create({
             randomize: value.randomize,
+            choosen_candidate: value.choosen_candidate,
             answer_candidate_a: value.answer_candidate_a,
             answer_candidate_b: value.answer_candidate_b,
             user: value.userId

@@ -1,4 +1,4 @@
-import { Box, Button, FormControl, Slider, SliderFilledTrack, SliderMark, SliderThumb, SliderTrack, Table, TableCaption, TableContainer, Tbody, Td, Tfoot, Th, Thead, Tooltip, Tr, useToast } from "@chakra-ui/react"
+import {Box, Button, FormControl, Radio, RadioGroup, Slider, SliderFilledTrack, SliderMark, SliderThumb, SliderTrack, Stack, Table, TableCaption, TableContainer, Tbody, Td, Tfoot, Th, Thead, Tooltip, Tr, useToast } from "@chakra-ui/react"
 import React from "react"
 import { useNavigate } from 'react-router-dom'
 import { useProfiling } from "./hook/useProfiling"
@@ -30,14 +30,14 @@ export default function Profiling() {
     const session = JSON.parse(localStorage.user)
     form.userId = session.data.id
     const question = session.data.question2
-    let personelized_question = ''
-    if (question == 'Tiktok') {
-            personelized_question = '1'
-        } else if (question == 'X/Twitter') {
-                personelized_question = '2'
-            } else if (question == 'Instagram') {
-                    personelized_question = '3'
-    }
+    // let personelized_question = ''
+    // if (question == 'Tiktok') {
+    //         personelized_question = '1'
+    //     } else if (question == 'X/Twitter') {
+    //             personelized_question = '2'
+    //         } else if (question == 'Instagram') {
+    //                 personelized_question = '3'
+    // }
     const [answer, setAnswer] = React.useState(0)
     form.randomize = mergedData.randomize
 
@@ -53,11 +53,12 @@ export default function Profiling() {
     
     async function getRandomizedCandidate() {
         try {
-            const response = await API.get(`/randomize/${personelized_question}`)
+            // const response = await API.get(`/randomize/${personelized_question}`)
+            const response = await API.get(`/randomize/1`)
             console.log(response.data)
             // setCandidate_a(response.data.candidate_a)
             // setCandidate_b(response.data.candidate_b)
-            setMergedData(mergeCandidates(response.data.candidate_a, response.data.candidate_b))
+            setMergedData(mergeCandidates(response.data.candidate_a, response.data.candidate_b, question))
         } catch(err) {
             console.log(err)
         }
@@ -94,7 +95,7 @@ export default function Profiling() {
 
     async function handleProfiling() {
         try {
-            if (answer < 3) {
+            if (answer < 9) {
                 await API.post('/addProfiling', form)
                 toast({
                     title: `Profiling candidate model ${answer + 1} submitted.`,
@@ -105,13 +106,11 @@ export default function Profiling() {
                 })
                 navigate('/profiling')
                 window.location.reload()
-            } else if (answer === 3) {
+            } else if (answer === 9) {
                 await API.post('/addProfiling', form)
-                navigate('/submitted')
-                localStorage.removeItem("user")
+                navigate('/biodata_update')
             } else {
-                navigate('/submitted')
-                localStorage.removeItem("user")
+                navigate('/biodata_update')
             }
         } catch (error) {
             throw error
@@ -122,7 +121,7 @@ export default function Profiling() {
         getRandomizedCandidate()
         countUser()
     }, [] )
-    console.log(form, null, 2)
+    // console.log(form, null, 2)
 
     return(
         <Box 
@@ -133,7 +132,12 @@ export default function Profiling() {
             mt={'25px'}
             mb={'75px'}
             width={'80vw'}
-        >
+        >   
+            <Box display={"flex"} justifyContent={"space-between"} width={"100%"}>
+                <h1>Pertanyaan 1</h1><Box textColor={'#222222'} backgroundColor={'white'} padding={'5px'} borderRadius={'5px'}>Halaman {answer + 1}</Box>
+            </Box>
+            <br />
+            <h1>Jika pemilu dilaksanakan hari ini, mana calon anggota DPR RI yang anda pilih ?</h1><br />
             <TableContainer 
                 width={'100%'}
                 mb={'25px'}
@@ -157,8 +161,16 @@ export default function Profiling() {
                     </Tfoot>
                 </Table>
             </TableContainer>
+            <RadioGroup name="choosen_candidate" textColor={'white'} onChange={(value) => handleChange({ target: { name: "choosen_candidate", value } })} value={form.choosen_candidate}>
+                <Stack direction='column'>
+                    <Radio value='Kandidat A' checked={form.choosen_candidate === 'Kandidat A'}>Kandidat A</Radio>
+                    <Radio value='Kandidat B' checked={form.choosen_candidate === 'Kandidat B'}>Kandidat B</Radio>
+                </Stack>
+            </RadioGroup><br />
+            <h1>Pertanyaan 2</h1><br />
+            <h1>Berapa skor keyakinan anda, seberapa besar calon anggota DPR RI tersebut bisa mewakili anda ?</h1>
             <FormControl>
-                <h1>Apabila Pemilu Diadakan Hari Ini, Berapa Nilai Yang Kamu Berikan Terhadap Kandidat A ?</h1>
+                <h1>Kandidat A</h1>
                 <Slider
                     id='slider'
                     defaultValue={5}
@@ -200,7 +212,7 @@ export default function Profiling() {
                 </Slider>
             </FormControl>
             <FormControl>
-                <h1>Apabila Pemilu Diadakan Hari Ini, Berapa Nilai Yang Kamu Berikan Terhadap Kandidat B ?</h1>
+                <h1>Kandidat B</h1>
                 <Slider
                     id='slider'
                     defaultValue={5}
@@ -239,7 +251,7 @@ export default function Profiling() {
                     </Tooltip>
                 </Slider>
             </FormControl>
-            <Button onClick={handleProfiling} colorScheme='teal' size='sm'>{answer === 3 ? "Finish" : "Next"}</Button>
+            <Button onClick={handleProfiling} colorScheme='teal' size='sm'>{answer === 9 ? "Finish" : "Next"}</Button>
         </Box>
     )
 }
