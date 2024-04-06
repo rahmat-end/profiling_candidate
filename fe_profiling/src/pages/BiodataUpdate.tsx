@@ -103,7 +103,7 @@ export default function BiodataUpdate() {
                         colorScheme="green" 
                         onClick={handleBiodataUpdate}
                     >
-                        Next
+                        Finish
                     </Button>
                 </FormControl>
             </form>

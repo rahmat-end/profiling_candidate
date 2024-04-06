@@ -108,9 +108,11 @@ export default function Profiling() {
                 window.location.reload()
             } else if (answer === 9) {
                 await API.post('/addProfiling', form)
-                navigate('/biodata_update')
+                navigate('/submitted')
+                // navigate('/biodata_update')
             } else {
-                navigate('/biodata_update')
+                navigate('/submitted')
+                // navigate('/biodata_update')
             }
         } catch (error) {
             throw error
