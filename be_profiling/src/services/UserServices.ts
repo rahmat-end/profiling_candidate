@@ -46,6 +46,46 @@ export default new class UserServices {
       }
     }
 
+    async search(req: Request, res: Response): Promise<Response> {
+      try {
+        const search = await this.UserRepository
+        .createQueryBuilder("user")
+        .orderBy("user.id", "ASC")
+        .where("LOWER(user.name) like LOWER(:key)", { key: `%${req.params.key}%` })
+        .orWhere("CAST(user.age AS TEXT) like :key", { key: `%${req.params.key}%` })
+        .orWhere("LOWER(user.district) like LOWER(:key)", { key: `%${req.params.key}%` })
+        .orWhere("LOWER(user.school) like LOWER(:key)", { key: `%${req.params.key}%` })
+        .orWhere("LOWER(user.phone_number) like LOWER(:key)", { key: `%${req.params.key}%` })
+        .orWhere("LOWER(user.gender) like LOWER(:key)", { key: `%${req.params.key}%` })
+        .getMany();
+  
+        return res.status(200).json({
+          status: "success",
+          data: search,
+          message: "Successfully! Record has been fetched"
+        })
+      } catch (err) {
+        return res.status(500).json({ message: "Something error while finding a data search by keyword"})
+      }
+  }
+
+    async data_user(req: Request, res: Response): Promise<Response> {
+      try {
+        const user = await this.UserRepository.find({ 
+          order: {
+            id: "ASC" 
+          }
+        })
+        return res.status(200).json({
+          status: "success",
+          data: user,
+          message: "Successfully! All record has been fetched"
+        })
+      } catch (err) {
+        return res.status(500).json({ message: "Something error while finding all user"})
+      }
+    }
+
     async add(req: Request, res: Response): Promise<Response> {
         try {
           const body = req.body
@@ -56,11 +96,16 @@ export default new class UserServices {
           const obj = this.UserRepository.create({
             name: value.name,
             age: value.age,
+            district: value.district,
+            school: value.school,
+            phone_number: value.phone_number,
             gender: value.gender,
             question1: value.question1,
             question2: value.question2,
             question3: value.question3,
             question4: value.question4,
+            question_video_ads: value.question_video_ads,
+            question_banner: value.question_banner,
             question5: value.question5,
             question6: value.question6
           })

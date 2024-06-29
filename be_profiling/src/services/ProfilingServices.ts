@@ -14,6 +14,11 @@ export default new class ProfilingServices {
           order: {
             id: "ASC" 
           },
+          where : {
+            user: {
+              id: 355
+            }
+          },
           relations: {
             user: true,
           }
@@ -32,7 +37,7 @@ export default new class ProfilingServices {
       try {
         const profiling = await this.ProfilingRepository.findOne({
           where: {
-              user: JSON.parse(req.params.id)
+              id: JSON.parse(req.params.id)
           },
           relations: {
             user: true

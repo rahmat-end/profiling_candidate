@@ -108,11 +108,11 @@ export default function Profiling() {
                 window.location.reload()
             } else if (answer === 9) {
                 await API.post('/addProfiling', form)
-                navigate('/submitted')
-                // navigate('/biodata_update')
+                // navigate('/submitted')
+                navigate('/biodata_update')
             } else {
-                navigate('/submitted')
-                // navigate('/biodata_update')
+                // navigate('/submitted')
+                navigate('/biodata_update')
             }
         } catch (error) {
             throw error
@@ -170,7 +170,7 @@ export default function Profiling() {
                 </Stack>
             </RadioGroup><br />
             <h1>Pertanyaan 2</h1><br />
-            <h1>Berapa skor keyakinan anda, seberapa besar calon anggota DPR RI tersebut bisa mewakili anda ?</h1>
+            <h1>Seberapa yakin anda calon anggota DPR RI tersebut dapat mewakili anda di DPR RI?</h1>
             <FormControl>
                 <h1>Kandidat A</h1>
                 <Slider

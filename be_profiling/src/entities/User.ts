@@ -13,6 +13,15 @@ export class User {
     @Column()
     age: number
 
+    @Column({ nullable: true })
+    district: string
+
+    @Column({ nullable: true })
+    school: string
+
+    @Column({ nullable: true })
+    phone_number: string
+
     @Column()
     gender: string
     
@@ -27,6 +36,12 @@ export class User {
 
     @Column({ nullable: true })
     question4: string
+
+    @Column({ nullable: true })
+    question_video_ads: string
+
+    @Column({ nullable: true })
+    question_banner: string
 
     @Column({ nullable: true })
     question5: string

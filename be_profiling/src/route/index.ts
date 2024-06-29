@@ -7,6 +7,8 @@ const router = express.Router()
 
 router.get("/users", UserControllers.find)
 router.get("/user/:id", UserControllers.findOne)
+router.get("/search/:key", UserControllers.search)
+router.get("/data_user", UserControllers.data_user)
 router.post("/addUser", UserControllers.add)
 router.put("/updateUser/:id", UserControllers.update)
 

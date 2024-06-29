@@ -8,6 +8,12 @@ export default new class UserControllers {
   findOne(req: Request, res: Response) {
     UserServices.findOne(req, res)
   }
+  search(req: Request, res: Response) {
+    UserServices.search(req, res)
+  }
+  data_user(req: Request, res: Response) {
+    UserServices.data_user(req, res)
+  }
   add(req: Request, res: Response) {
     UserServices.add(req, res)
   }

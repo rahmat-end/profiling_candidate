@@ -11,11 +11,16 @@ export function useBiodata() {
     const [form, setForm] = React.useState<IUser>({
         name: '',
         age: 0,
+        district: '',
+        school: '',
+        phone_number: '',
         gender: '',
         question1: '',
         question2: '',
         question3: '',
         question4: '',
+        question_video_ads: '',
+        question_banner: '',
         question5: '',
         question6: '',
     })
